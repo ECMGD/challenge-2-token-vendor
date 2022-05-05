@@ -10,18 +10,18 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironmentExtended) => {
   await deploy('YourToken', {
     // Learn more about args here: https://www.npmjs.com/package/hardhat-deploy#deploymentsdeploy
     from: deployer,
-    // args: ["Hello"],
+    args: [ethers.utils.parseEther('0.01')],
     log: true,
   });
 
   const yourToken = await ethers.getContract('YourToken', deployer);
 
   // Todo: transfer tokens to frontend address
-  // const result = await yourToken.transfer("0x18fFE4dADcCe63A074Ef9cfe327cAb9AD4Ad9f76", ethers.utils.parseEther("1000") );
+  // const result = await yourToken.transfer("0x09a430b8497C4846FfB6BCA087ddC6Ac21b244E2", ethers.utils.parseEther("100"));
 
   // ToDo: To take ownership of yourContract using the ownable library uncomment next line and add the
   // address you want to be the owner.
-  // yourContract.transferOwnership(YOUR_ADDRESS_HERE);
+  await yourToken.transferOwnership(deployer);
 };
 export default func;
 func.tags = ['YourToken'];
