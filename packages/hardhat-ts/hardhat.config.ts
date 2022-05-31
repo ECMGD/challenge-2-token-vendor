@@ -75,8 +75,9 @@ const config: HardhatUserConfig = {
     },
     rinkeby: {
       url: 'https://rinkeby.infura.io/v3/ca11d2a86d8e493798c1f7469e7a2a5e', // <---- YOUR INFURA ID! (or it won't work)
-      gasPrice: 50000000000,
-      // gasMultiplier: 5,
+      gasMultiplier: 10,
+      gas: 15000000,
+      gasPrice: 15000000000,
       accounts: {
         mnemonic: getMnemonic(),
       },

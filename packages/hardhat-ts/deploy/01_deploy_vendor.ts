@@ -18,10 +18,11 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironmentExtended) => {
     from: deployer,
     args: [yourToken.address],
     log: true,
+    gasLimit: 10000000,
   });
 
   const vendor = await ethers.getContract("Vendor", deployer);
-  await yourToken.transfer(vendor.address, 10);
+  await yourToken.transfer(vendor.address, ethers.utils.parseEther("1000"));
   // await yourToken.totalSupply().then(async (r: any) => { if (r > 0) { await yourToken.burn(yourToken.address, r) } });
   console.log("\n 🏵  Sending all tokens to the vendor...\n");
 

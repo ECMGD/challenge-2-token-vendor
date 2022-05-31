@@ -21,7 +21,7 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironmentExtended) => {
 
   // ToDo: To take ownership of yourContract using the ownable library uncomment next line and add the
   // address you want to be the owner.
-  await yourToken.transferOwnership(deployer);
+  // await yourToken.transferOwnership(deployer);
 };
 export default func;
 func.tags = ['YourToken'];
