@@ -26,13 +26,13 @@ contract Vendor is Ownable{
 
   // ToDo: create a payable buyTokens() function:
   function buyTokens() public payable {
-    uint256 purchase = msg.value * tokensPerEth;
+    uint256 purchase = msg.value * tokensPerEth / 1000000000000000000;
     yourToken.transfer(msg.sender, purchase);
 
     emit BuyTokens(msg.sender, msg.value, purchase);
   }
 
-  // ToDo: create a withdraw() function that lets the owner withdraw ETH
+  // ToDo: create a withdraw() function that lets the owner withdraw ETH in wei
   function withdraw(uint256 amount) public onlyOwner() returns (bool){
     require(liquidityDrain, "Vendor: Liquidity drain is off.");
     require(address(this).balance >= amount, "Vendor: Insufficient contract balance");
@@ -46,11 +46,11 @@ contract Vendor is Ownable{
   function approve(address addr, uint256 amount) public {
     yourToken.approve(addr, amount);
   }
-  function sellTokens(uint256 amount) public {
-    uint256 ethTransfer = amount*tokensPerEth;
-    require(address(this).balance >= ethTransfer, "Vendor: Contract balance insufficient.");
+  function sellTokens(uint256 amount) public returns(uint256){
+    uint256 weiTransfer = (amount * 1000000000000000000) / tokensPerEth;
+    require(uint256(address(this).balance) >= weiTransfer, "Vendor: Contract balance insufficient.");
     yourToken.transferFrom(msg.sender, address(this), amount);
-    (bool sent, ) = msg.sender.call{value: ethTransfer}("");
+    (bool sent, ) = msg.sender.call{value: weiTransfer}("");
     require(sent, "Failed to send Ether");
   }
 }

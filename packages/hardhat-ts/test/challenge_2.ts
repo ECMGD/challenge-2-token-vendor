@@ -112,10 +112,16 @@ describe("🚩 Challenge 2: 🏵 Token Vendor 🤖", function () {
       console.log('\t'," 🙄 Approving...")
       const approveTokensResult = await yourToken.approve(vendor.address, sellAmount);
       console.log('\t'," 🏷  approveTokens Result Result: ",approveTokensResult.hash)
+      const allownce = await yourToken.allowance(owner.address, vendor.address);
+      console.log('zzzzzzzzzzzzzzzz', allownce.toNumber())
 
       console.log('\t'," ⏳ Waiting for confirmation...")
       const atxResult =  await approveTokensResult.wait()
       expect(atxResult.status).to.equal(1)
+
+      console.log('zzzzzzbalance: ', await ethers.utils.formatEther(await ethers.provider.getBalance(vendor.address)))
+      // const a = await vendor.sellTokens.call("sellTokens", 1);
+      // console.log('zzzzzzbalance: ', (a))
 
       console.log('\t'," 🍾 Selling...")
       const sellTokensResult = await vendor.sellTokens(sellAmount);
