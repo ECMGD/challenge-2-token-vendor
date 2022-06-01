@@ -26,7 +26,7 @@ contract Vendor is Ownable{
 
   // ToDo: create a payable buyTokens() function:
   function buyTokens() public payable {
-    uint256 purchase = msg.value * tokensPerEth / 1000000000000000000;
+    uint256 purchase = msg.value * tokensPerEth;
     yourToken.transfer(msg.sender, purchase);
 
     emit BuyTokens(msg.sender, msg.value, purchase);
@@ -47,7 +47,7 @@ contract Vendor is Ownable{
     yourToken.approve(addr, amount);
   }
   function sellTokens(uint256 amount) public returns(uint256){
-    uint256 weiTransfer = (amount * 1000000000000000000) / tokensPerEth;
+    uint256 weiTransfer = amount / tokensPerEth;
     require(uint256(address(this).balance) >= weiTransfer, "Vendor: Contract balance insufficient.");
     yourToken.transferFrom(msg.sender, address(this), amount);
     (bool sent, ) = msg.sender.call{value: weiTransfer}("");
